@@ -12,13 +12,14 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Siapkan proyek (langsung atau dari ZIP)
+      - name: Siapkan proyek dari ZIP
         run: |
           if [ -f settings.gradle.kts ]; then
             DIR=.
           else
-            ZIP=$(ls -t *.zip 2>/dev/null | head -n1)
+            ZIP=$(ls AudioEditorMP3Cutter_V3_Source.zip 2>/dev/null || ls -t *.zip 2>/dev/null | head -n1)
             [ -n "$ZIP" ] || { echo "Tidak ada file ZIP di root repo"; exit 1; }
+            echo "Memakai: $ZIP"
             mkdir -p _src && unzip -q -o "$ZIP" -d _src
             DIR=$(dirname "$(find _src -name settings.gradle.kts | head -n1)")
           fi
